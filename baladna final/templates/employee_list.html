@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background: url('static/images/blurr image.png') no-repeat center top fixed;
+            background-size: cover;
+            color: #f0f0f0; /* Light grey text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 1.15rem; /* Increase font size by 15% */
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff; /* White for headings */
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 10px;
+            font-size: 1.725rem; /* Increase font size by 15% */
+        }
+
+        .employee-container {
+            background-color: rgba(86, 84, 84, 0.9); /* Dark grey background */
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(247, 245, 245, 0.922); /* Light grey shadow */
+            padding: 20px;
+            width: 80%;
+            max-width: 1200px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            color: #f0f0f0; /* Light grey text */
+            font-size: 1.15rem; /* Increase font size by 15% */
+        }
+
+        th, td {
+            padding: 17.25px; /* Increase padding by 15% */
+            text-align: left;
+            border: 1px solid #444444; /* Dark grey borders */
+        }
+
+        th {
+            background-color: #1f1f1f; /* Dark grey background */
+            color: #ffffff; /* White text */
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        tr:hover {
+            background-color: #666666; /* Grey on hover */
+            color: #ffffff; /* White text on hover */
+            transform: scale(1.02);
+            transition: 0.3s ease-in-out;
+        }
+
+        .btn {
+            background-color: #ffffff; /* Grey button background */
+            border: none;
+            color: #090909; /* White text */
+            padding: 11.5px 23px; /* Increase padding by 15% */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16.1px; /* Increase font size by 15% */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ffffff; /* White background on hover */
+            color: #000000; /* Black text on hover */
+        }
+
+        .action-btn {
+            margin-right: 10px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 11.5px 23px; /* Increase padding by 15% */
+            background-color: #000000; /* Grey button background */
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16.1px; /* Increase font size by 15% */
+        }
+
+        .back-btn:hover {
+            background-color: #ffffff; /* White background on hover */
+            color: #000000; /* Black text on hover */
+        }
+
+        /* Class for normal font for numbers */
+        .normal-font {
+            font-family: 'Lato', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="employee-container">
+        <h1>Employee List</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>ID Number</th>
+                    <th>Start Date</th>
+                    <th>Monthly Salary</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if employees %}
+                    {% for employee in employees %}
+                    <tr>
+                        <td><span class="normal-font">{{ employee.id }}</span></td>
+                        <td>
+                            <a href="{{ url_for('employee_history', employee_id=employee.id) }}" class="btn action-btn"> {{ employee.name }}</a>
+                        </td>
+                        <td><span class="normal-font">{{ employee.phone_number }}</span></td>
+                        <td><span class="normal-font">{{ employee.id_number }}</span></td>
+                        <td><span class="normal-font">{{ employee.start_date }}</span></td>
+                        <td><span class="normal-font">{{ employee.formatted_salary }}</span></td>
+                        <td>
+                            <a href="{{ url_for('employee_details', employee_id=employee.id) }}" class="btn action-btn">View Details</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align: center;">No employees found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('admin_dashboard') }}" class="back-btn">Back to Admin Dashboard</a>
+    </div>
+</body>
+
+</html>
